@@ -6,11 +6,14 @@
 
 // The S3 bucket to list
 // This bucket *must* have anonymous list/read permissions
-define('BUCKET', 'example');
+$BUCKET = "";
 
 // The base URL to serve content from (e.g. http://example.com/)
 // Default is the standard S3 URL (e.g. mybucket.s3.amazonaws.com)
-define('BASE', '//' . BUCKET . '.s3.amazonaws.com/');
+$BASE = "//$BUCKET.s3.amazonaws.com/";
+
+// Optional config file
+$CONFIGFILE = 'benjamin.conf.php';
 
 // known image extensions, case-insensitive
 $img_extensions = array('bmp', 'gif', 'png', 'jpe?g');
@@ -42,7 +45,7 @@ function get_files($dir, $img_extensions) {
                                  CURLOPT_HEADER => false,
                                  CURLOPT_RETURNTRANSFER => 1,
                                  CURLOPT_TIMEOUT => 60,
-                                 CURLOPT_URL => 'http://' . BUCKET . '.s3.amazonaws.com/'));
+                                 CURLOPT_URL => 'http://' . $dir . '.s3.amazonaws.com/'));
     $data = curl_exec($ch);
     if (curl_error($ch)) {
         die(curl_error($ch));
@@ -58,7 +61,18 @@ function get_files($dir, $img_extensions) {
     return $files;
 }
 
-$files = get_files(BUCKET, $img_extensions);
+// Include optional smallproxy.conf.php if it exists
+if (file_exists($CONFIGFILE)) {
+    include $CONFIGFILE;
+}
+
+// Check the endpoint is set
+if (!$BUCKET) {
+    die("Remember to set the bucket, sir or madam.");
+}
+
+
+$files = get_files($BUCKET, $img_extensions);
 $current = null;
 if (isset($_GET['img'])) {
     if (array_key_exists($_GET['img'], $files['images'])) {
@@ -93,7 +107,7 @@ if (isset($_GET['img'])) {
 </head>
 <body>
     <h1>Browsing <?php echo dirname($_SERVER['PHP_SELF']) ?></h1>
-    <?php if (!is_null($current)): ?><h2><?php echo $current ?></h2><img src="<?php echo BASE ?><?php echo $current ?>"><?php endif;?>
+    <?php if (!is_null($current)): ?><h2><?php echo $current ?></h2><img src="<?php echo $BASE ?><?php echo $current ?>"><?php endif;?>
     <?php foreach ($files as $group => $groupfiles): ?>
         <?php if(count($groupfiles) == 0) continue; ?>
         <?php $open = false; $pos = 1; ?>
