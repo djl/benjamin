@@ -8,6 +8,5 @@ setup
 -----
 
 * Make sure your S3 bucket has "list" permissions for "Everyone"
-* Upload `benjamin.php` to your server
-* Create `benjamin.conf.php` and set the `$BUCKET` variable
-* Edit the `BUCKET` and `BASE` constants where required
+* Upload `benjamin.php`
+* Create `benjamin.conf.php` and set the `$BUCKET` and $BASE variables
