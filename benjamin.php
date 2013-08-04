@@ -120,7 +120,7 @@ if (isset($_GET['img'])) {
             <?php $is_img = array_key_exists($name, $files['images']);?>
             <?php if (!$open): $open = true; ?><td><table><?php endif; ?>
             <?php if ($pos > $files_per_column): $open = true; $pos = 1; ?></table></td><td><table><?php endif; ?>
-            <tr><td><a href="<?php if($is_img) { echo $_SERVER['PHP_SELF'] . '?img='; } ?><?php echo $name ?>"><?php echo $name; ?></a></td><td class="light"><?php if(!is_null($size)): ?>(<?php echo $size; ?>)<?php endif; ?></td></tr>
+            <tr><td><a href="<?php if($is_img) { echo strtok($_SERVER['REQUEST_URI'], '?') . '?img='; } ?><?php echo $name ?>"><?php echo $name; ?></a></td><td class="light"><?php if(!is_null($size)): ?>(<?php echo $size; ?>)<?php endif; ?></td></tr>
             <?php $pos++; ?>
         <?php endforeach; ?>
         <?php if ($open): ?></td></table><?php endif; ?>
