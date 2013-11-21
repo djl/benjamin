@@ -77,19 +77,22 @@ $current = null;
 if (isset($_GET['img'])) {
     if (array_key_exists($_GET['img'], $files['images'])) {
         $current = $_GET['img'];
+        $title = $current;
     }
 } else {
     if (count($files['images']) > 0) {
         reset($files['images']);
         $current = key($files['images']);
+        $title = '/';
     }
 }
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Browsing <?php echo dirname($_SERVER['PHP_SELF']) ?></title>
+    <title><?php echo $title ?></title>
     <style type="text/css">
         *{margin:0;padding:0;}
         body{background:white;color:black;font:11px/16px Verdana,"Bitstream Vera Sans",sans-serif;padding:30px;}
