@@ -1,9 +1,4 @@
 <?php
-//
-// And Jacob begat Benjamin
-// http://github.com/djl/benjamin
-//
-
 // The S3 bucket to list
 // This bucket *must* have anonymous list/read permissions
 $BUCKET = "";
@@ -13,7 +8,7 @@ $BUCKET = "";
 $BASE = "//$BUCKET.s3.amazonaws.com/";
 
 // Optional config file
-$CONFIGFILE = 'benjamin.conf.php';
+$CONFIGFILE = 's3dirlist.conf.php';
 
 // known image extensions, case-insensitive
 $img_extensions = array('bmp', 'gif', 'png', 'jpe?g');
